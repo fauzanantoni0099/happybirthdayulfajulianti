@@ -106,15 +106,61 @@
   @keyframes btnShine{0%{left:-60%;}45%{left:120%;}100%{left:120%;}}
   .reveal{filter:blur(4px);}
   .reveal.in{filter:blur(0);}
-  @media (prefers-reduced-motion:reduce){.sparkle,.hero::before,h1 .accent,.btn::before,.hero-play::before{animation:none!important;}}
+
+  /* ---- hiasan balon ---- */
+  .balloons{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+  .balloon{--c:#e8879a;--photo:none;position:absolute;bottom:-160px;width:88px;height:106px;background-image:radial-gradient(circle at 30% 24%,rgba(255,255,255,.5),transparent 45%),var(--photo);background-size:cover,cover;background-position:center,center;background-repeat:no-repeat,no-repeat;border-radius:50% 50% 50% 50%/58% 58% 42% 42%;border:3px solid var(--c);opacity:.92;filter:drop-shadow(0 10px 16px rgba(20,10,25,.4));animation:balloonRise linear infinite;}
+  .balloon::before{content:"";position:absolute;left:50%;bottom:-46px;width:1px;height:46px;background:rgba(255,255,255,.4);transform:translateX(-50%);}
+  .balloon::after{content:"";position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--c);}
+  @keyframes balloonRise{0%{transform:translateY(0) translateX(0) rotate(-4deg);opacity:0;}8%{opacity:.9;}50%{transform:translateY(-55vh) translateX(24px) rotate(4deg);}92%{opacity:.85;}100%{transform:translateY(-118vh) translateX(-18px) rotate(-4deg);opacity:0;}}
+
+  /* ---- confetti ---- */
+  .confetti-layer{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+  .confetti{position:absolute;top:-20px;opacity:.85;animation:confettiFall linear infinite;}
+  @keyframes confettiFall{0%{transform:translateY(0) translateX(0) rotate(0deg);opacity:0;}8%{opacity:.9;}50%{transform:translateY(55vh) translateX(-22px) rotate(180deg);}92%{opacity:.75;}100%{transform:translateY(112vh) translateX(16px) rotate(360deg);opacity:0;}}
+
+  /* ---- garland bendera ---- */
+  .garland{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:min(92%,720px);z-index:2;pointer-events:none;display:flex;justify-content:space-between;}
+  .garland::before{content:"";position:absolute;top:1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(253,244,236,.45),rgba(253,244,236,.45),transparent);}
+  .flag{--fc:#e8879a;width:20px;height:24px;background:var(--fc);clip-path:polygon(0 0,100% 0,50% 100%);opacity:.9;filter:drop-shadow(0 4px 6px rgba(20,10,25,.3));}
+  .flag:nth-child(3n+1){transform:translateY(3px) rotate(-2deg);}
+  .flag:nth-child(3n+2){transform:translateY(9px) rotate(1deg);}
+  .flag:nth-child(3n){transform:translateY(5px) rotate(2deg);}
+  @media (max-width:560px){.garland{display:none;}}
+
+  /* ---- fairy lights ---- */
+  .fairylights{position:fixed;top:0;left:0;right:0;height:24px;z-index:65;pointer-events:none;overflow:hidden;}
+  .fairylights::before{content:"";position:absolute;top:5px;left:-2%;right:-2%;height:1px;background:rgba(253,244,236,.22);}
+  .bulb{--bc:#f4c99b;position:absolute;top:8px;width:8px;height:10px;border-radius:50% 50% 60% 60%;background:var(--bc);box-shadow:0 0 7px 2px var(--bc);animation:bulbTwinkle 2.6s ease-in-out infinite;}
+  @keyframes bulbTwinkle{0%,100%{opacity:.5;transform:scale(.88);}50%{opacity:1;transform:scale(1.06);}}
+
+  /* ---- kelopak melayang ---- */
+  .petals{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+  .petal{position:absolute;top:-30px;animation:petalFall linear infinite;opacity:.85;}
+  @keyframes petalFall{0%{transform:translateY(0) translateX(0) rotate(0deg);opacity:0;}10%{opacity:.85;}50%{transform:translateY(55vh) translateX(40px) rotate(150deg);}90%{opacity:.7;}100%{transform:translateY(112vh) translateX(-32px) rotate(320deg);opacity:0;}}
+
+  /* ---- kembang api klik ---- */
+  .fw-burst{position:fixed;top:0;left:0;width:0;height:0;pointer-events:none;z-index:80;}
+  .fw-ring{position:absolute;top:0;left:0;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2.5px solid var(--pc);opacity:.9;animation:fwRing 1s cubic-bezier(.2,.7,.3,1) forwards;}
+  @keyframes fwRing{0%{width:8px;height:8px;margin:-4px 0 0 -4px;opacity:.9;}100%{width:260px;height:260px;margin:-130px 0 0 -130px;opacity:0;}}
+  .fw-particle{position:absolute;top:0;left:0;width:15px;height:15px;margin:-7.5px 0 0 -7.5px;border-radius:50%;background:var(--pc);box-shadow:0 0 18px 5px var(--pc);animation:fwFly 1.6s cubic-bezier(.12,.65,.25,1) forwards;}
+  @keyframes fwFly{0%{transform:translate(0,0) scale(1);opacity:1;}70%{opacity:.9;}100%{transform:translate(var(--dx),var(--dy)) scale(.25);opacity:0;}}
+  .fw-spark{position:absolute;top:0;left:0;width:3px;height:3px;margin:-1.5px 0 0 -1.5px;color:var(--pc);font-size:28px;line-height:1;text-shadow:0 0 12px var(--pc);animation:fwFly 1.5s cubic-bezier(.12,.65,.25,1) forwards;}
+
+  @media (prefers-reduced-motion:reduce){.sparkle,.hero::before,h1 .accent,.btn::before,.hero-play::before{animation:none!important;}.balloon,.confetti,.bulb,.petal{display:none;}}
 </style>
 </head>
 <body>
   <div class="stars" id="stars"></div>
   <div class="sparkles" id="sparkles"></div>
+  <div class="balloons" id="balloons"></div>
+  <div class="confetti-layer" id="confettiLayer"></div>
+  <div class="petals" id="petals"></div>
+  <div class="fairylights" id="fairylights"></div>
   <div class="vignette"></div>
   <div class="wrap">
     <header class="hero">
+      <div class="garland" id="garland"></div>
       <p class="eyebrow">For someone who means the world to me</p>
       <h1>Happy Birthday<span class="accent">Sayangku</span><span class="accent">Ulfa Julianti</span></h1>
       <button class="hero-play" id="heroMusicBtn">
@@ -216,6 +262,71 @@ Selamat ulang tahun, cintaku. Semoga Tuhan selalu melindungimu, memberimu umur y
   for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*4+'s';s.style.animationDuration=(3+Math.random()*3)+'s';stars.appendChild(s);}
   const sparkles=document.getElementById('sparkles');
   for(let i=0;i<26;i++){const sp=document.createElement('div');sp.className='sparkle';const size=(2+Math.random()*3).toFixed(1);sp.style.width=size+'px';sp.style.height=size+'px';sp.style.left=Math.random()*100+'%';sp.style.animationDelay=(Math.random()*14)+'s';sp.style.animationDuration=(9+Math.random()*8)+'s';sparkles.appendChild(sp);}
+  const balloons=document.getElementById('balloons');
+  const balloonColors=['#e8879a','#c15a72','#f4c99b','#f7d774','#b98bd6','#8fd3c7'];
+  const galleryPhotos=Array.from(document.querySelectorAll('#gallery img')).map(img=>img.getAttribute('src'));
+  for(let i=0;i<12;i++){const b=document.createElement('div');b.className='balloon';const scale=0.7+Math.random()*0.6;const photo=galleryPhotos[Math.floor(Math.random()*galleryPhotos.length)];b.style.left=Math.random()*100+'%';b.style.width=(88*scale).toFixed(0)+'px';b.style.height=(106*scale).toFixed(0)+'px';b.style.setProperty('--c',balloonColors[Math.floor(Math.random()*balloonColors.length)]);b.style.setProperty('--photo',photo?`url("${photo}")`:'none');b.style.animationDelay=(Math.random()*20)+'s';b.style.animationDuration=(16+Math.random()*10)+'s';balloons.appendChild(b);}
+
+  const confettiLayer=document.getElementById('confettiLayer');
+  const confettiColors=['#e8879a','#c15a72','#f4c99b','#f7d774','#b98bd6','#8fd3c7','#fdf4ec'];
+  for(let i=0;i<34;i++){const c=document.createElement('div');c.className='confetti';const w=(4+Math.random()*4).toFixed(1),h=(8+Math.random()*6).toFixed(1);const round=Math.random()>0.5;c.style.width=w+'px';c.style.height=h+'px';c.style.borderRadius=round?'50%':'2px';c.style.background=confettiColors[Math.floor(Math.random()*confettiColors.length)];c.style.left=Math.random()*100+'%';c.style.animationDelay=(Math.random()*16)+'s';c.style.animationDuration=(9+Math.random()*8)+'s';confettiLayer.appendChild(c);}
+
+  const petals=document.getElementById('petals');
+  const petalEmojis=['🌸','🌺'];
+  for(let i=0;i<10;i++){const p=document.createElement('div');p.className='petal';p.textContent=petalEmojis[Math.floor(Math.random()*petalEmojis.length)];p.style.left=Math.random()*100+'%';p.style.fontSize=(14+Math.random()*12)+'px';p.style.animationDelay=(Math.random()*18)+'s';p.style.animationDuration=(12+Math.random()*10)+'s';petals.appendChild(p);}
+
+  const fairylights=document.getElementById('fairylights');
+  const bulbColors=['#f4c99b','#e8879a','#f7d774','#b98bd6','#8fd3c7'];
+  const bulbCount=22;
+  for(let i=0;i<bulbCount;i++){const bl=document.createElement('div');bl.className='bulb';const pct=(i+0.5)/bulbCount*100;bl.style.left=pct+'%';bl.style.top=(6+Math.sin(i*0.9)*4)+'px';bl.style.setProperty('--bc',bulbColors[i%bulbColors.length]);bl.style.animationDelay=(Math.random()*2.6)+'s';fairylights.appendChild(bl);}
+
+  const garland=document.getElementById('garland');
+  const flagColors=['#e8879a','#c15a72','#f4c99b','#f7d774','#b98bd6','#8fd3c7'];
+  for(let i=0;i<9;i++){const f=document.createElement('div');f.className='flag';f.style.setProperty('--fc',flagColors[i%flagColors.length]);garland.appendChild(f);}
+
+  // ----- kembang api saat klik -----
+  const fwColors=['#f4c99b','#fff8ec','#e8879a','#c15a72','#f7d774','#b98bd6'];
+  const fwSparks=['✦','✧','✹','✴','♥'];
+  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function spawnFirework(x,y){
+    if(reduceMotion)return;
+    const burst=document.createElement('div');
+    burst.className='fw-burst';
+    burst.style.left=x+'px';
+    burst.style.top=y+'px';
+    const ring=document.createElement('div');
+    ring.className='fw-ring';
+    ring.style.setProperty('--pc',fwColors[Math.floor(Math.random()*fwColors.length)]);
+    burst.appendChild(ring);
+    const pointsPerLayer=24+Math.floor(Math.random()*6);
+    const heartScale=7+Math.random()*1.5;
+    const layerScales=[1,0.86,0.7];
+    layerScales.forEach((layerScale)=>{
+      for(let i=0;i<pointsPerLayer;i++){
+        const t=(Math.PI*2*i)/pointsPerLayer+(Math.random()*0.05-0.025);
+        const hx=16*Math.pow(Math.sin(t),3);
+        const hy=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+        const jitter=1+(Math.random()*0.16-0.08);
+        const s=heartScale*layerScale*jitter;
+        const dx=(hx*s).toFixed(1)+'px';
+        const dy=(-hy*s).toFixed(1)+'px';
+        const color=fwColors[Math.floor(Math.random()*fwColors.length)];
+        const useSpark=Math.random()>0.72;
+        const p=document.createElement('div');
+        p.className=useSpark?'fw-spark':'fw-particle';
+        if(useSpark)p.textContent=fwSparks[Math.floor(Math.random()*fwSparks.length)];
+        p.style.setProperty('--pc',color);
+        p.style.setProperty('--dx',dx);
+        p.style.setProperty('--dy',dy);
+        p.style.animationDelay=(Math.random()*0.1)+'s';
+        burst.appendChild(p);
+      }
+    });
+    document.body.appendChild(burst);
+    setTimeout(()=>burst.remove(),1750);
+  }
+  document.addEventListener('pointerdown',(e)=>{spawnFirework(e.clientX,e.clientY);});
+
   const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   const photos=Array.from(document.querySelectorAll('.photo'));
